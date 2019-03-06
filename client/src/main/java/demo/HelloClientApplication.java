@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,16 @@ public class HelloClientApplication {
 		return client.helloPhone();
 	}
 
+	@RequestMapping("/phoneplusencoded")
+	public String helloPhonePlusEncoded() {
+		return client.helloPhonePlusEncoded();
+	}
+
+	@RequestMapping("/phone/{number}")
+	public String helloPhone(@PathVariable String number) {
+		return client.helloPhoneNumber(number);
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(HelloClientApplication.class, args);
 	}
@@ -43,5 +54,11 @@ public class HelloClientApplication {
 
 		@RequestMapping(value = "/phone/+123", method = GET)
 		String helloPhone();
+
+		@RequestMapping(value = "/phone/%2B123", method = GET)
+		String helloPhonePlusEncoded();
+
+		@RequestMapping(value = "/phone/{number}", method = GET)
+		String helloPhoneNumber(@PathVariable("number") String number);
 	}
 }
