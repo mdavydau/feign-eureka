@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,12 @@ public class HelloServerApplication {
 	public String hello() {
 		ServiceInstance localInstance = client.getLocalServiceInstance();
 		return "Hello World: "+ localInstance.getServiceId()+":"+localInstance.getHost()+":"+localInstance.getPort();
+	}
+
+	@RequestMapping("/phone/{number}")
+	public String hello(@PathVariable String number) {
+		ServiceInstance localInstance = client.getLocalServiceInstance();
+		return "Hello World: " + number + " | " + localInstance.getServiceId()+":"+localInstance.getHost()+":"+localInstance.getPort();
 	}
 
 	public static void main(String[] args) {

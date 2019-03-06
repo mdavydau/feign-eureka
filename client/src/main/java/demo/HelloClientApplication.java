@@ -27,6 +27,11 @@ public class HelloClientApplication {
 		return client.hello();
 	}
 
+	@RequestMapping("/phone")
+	public String helloPhone() {
+		return client.helloPhone();
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(HelloClientApplication.class, args);
 	}
@@ -35,5 +40,8 @@ public class HelloClientApplication {
 	interface HelloClient {
 		@RequestMapping(value = "/", method = GET)
 		String hello();
+
+		@RequestMapping(value = "/phone/+123", method = GET)
+		String helloPhone();
 	}
 }
